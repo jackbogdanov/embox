@@ -101,6 +101,10 @@ data_abt_handler:
     sub r14, r14, #8
 
 arm_unresolvable_exception:
+    mrc p15, 0, r0, c1, c0, 0
+    and r0, r0, #~CR_M
+    mcr p15, 0, r0, c1, c0, 0
+    ldr sp, =_stack_top
     nop
     stmfd sp!, {r0-r12, r14}
     mrs r0, CPSR
