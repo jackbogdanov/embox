@@ -1,0 +1,19 @@
+package embox.cmd.mem
+
+@AutoCmd
+@Cmd(name = "infomem",
+	help = "get mem info",
+	man = '''
+		NAME
+			infomem - get mem info.
+		SYNOPSIS
+			infomem
+		DESCRIPTION
+
+		AUTHOR
+			Bogdanov Evgenij
+	''')
+module infomem {
+	source "infomem.c"
+
+}
