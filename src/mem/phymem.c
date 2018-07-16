@@ -18,7 +18,6 @@ EMBOX_UNIT_INIT(phymem_init);
 
 struct page_allocator *__phymem_allocator;
 
-
 static int phymem_init(void) {
 	char *const phymem_alloc_start = phymem_allocated_start();
 	char *const phymem_alloc_end = phymem_allocated_end();
@@ -62,3 +61,8 @@ void *phymem_alloc(size_t page_number) {
 void phymem_free(void *page, size_t page_number) {
 	page_free(__phymem_allocator, page, page_number);
 }
+
+struct page_allocator * phy_allocator(void) {
+	return __phymem_allocator;
+}
+

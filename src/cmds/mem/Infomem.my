@@ -15,5 +15,4 @@ package embox.cmd.mem
 	''')
 module infomem {
 	source "infomem.c"
-
 }

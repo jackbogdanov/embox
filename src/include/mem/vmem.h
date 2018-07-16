@@ -48,4 +48,6 @@ extern void mmu_flush_tlb(void);
 
 extern void vmem_get_idx_from_vaddr(mmu_vaddr_t virt_addr, size_t *pgd_idx, size_t *pmd_idx, size_t *pte_idx);
 
+extern void print_sections(void);
+
 #endif /* MEM_VMEM_H_ */

@@ -22,6 +22,9 @@
 #include <mem/mmap.h>
 #include <embox/unit.h>
 
+//------
+#include <stdio.h>
+
 ARRAY_SPREAD_DEF(struct periph_memory_desc *, __periph_mem_registry);
 
 EMBOX_UNIT_INIT(periph_memory_init);
@@ -98,6 +101,17 @@ static int periph_memory_init(void) {
 	}
 
 	return 0;
+}
+
+void print_segments(void) {
+	printf("PERIPH SEGMENTS:\n");
+
+	for(int i = 0; i < 64; i++) {
+		if (!_segments[i].start) {
+			break;
+		}
+		printf("seg_num %d: start - %x    end - %x\n", i, _segments[i].start, _segments[i].end);
+	}
 }
 
 #endif /* NOMMU */

@@ -19,6 +19,7 @@
 #include <mem/vmem/vmem_alloc.h>
 #include <util/binalign.h>
 
+
 #define PGD_COUNT  OPTION_GET(NUMBER, pgd_count)
 #define PMD_COUNT  OPTION_GET(NUMBER, pmd_count)
 #define PTE_COUNT  OPTION_GET(NUMBER, pte_count)
@@ -155,3 +156,17 @@ void vmem_free_page(void *addr) {
 	if (page_belong(virt_page_allocator, addr))
 		page_free(virt_page_allocator, addr, 1);
 }
+
+
+struct page_allocator * get_pgd_allocator(void) {
+	return pgd_allocator;
+}
+
+struct page_allocator * get_pmd_allocator(void) {
+	return pmd_allocator;
+}
+
+struct page_allocator * get_pte_allocator(void) {
+	return pte_allocator;
+}
+

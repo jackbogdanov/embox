@@ -22,4 +22,6 @@ struct periph_memory_desc {
 	ARRAY_SPREAD_ADD(__periph_mem_registry, \
 		&_mem_desc)
 
+extern void print_segments(void);
+
 #endif /* _DRIVERS_COMMON_MEMORY_H */

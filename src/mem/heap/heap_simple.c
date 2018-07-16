@@ -11,7 +11,9 @@
 #include <stdlib.h>
 #include <embox/unit.h>
 #include <mem/heap.h>
+//#include <mem/heap_simple.h>
 #include <mem/page.h>
+
 
 static int has_initialized = 0;
 static char *managed_memory_start;
@@ -130,3 +132,17 @@ void *realloc(void *ptr, size_t size) {
 	free(ptr);
 	return tmp;
 }
+
+//void heap_info(void) {
+//	printf("SIMPLE HEAP INFO:\n");
+//
+//	printf("is init - %d\n", has_initialized);
+//
+//	if (has_initialized) {
+//		printf("хз? - %p\n", mem_pool);
+//		printf("begin address - %p\n end address - %p\n", managed_memory_start, last_valid_address);
+//
+//	}
+//
+//	printf("-----------------------------------------\n");
+//}
