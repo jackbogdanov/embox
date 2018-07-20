@@ -23,8 +23,6 @@ extern void vmem_free_pmd_table(mmu_pmd_t *pmd);
 extern void vmem_free_pte_table(mmu_pte_t *pte);
 extern void vmem_free_page(void *addr);
 
-//extern size_t get_free_meminfo(void);
-
 extern struct page_allocator * get_pgd_allocator(void);
 extern struct page_allocator * get_pmd_allocator(void);
 extern struct page_allocator * get_pte_allocator(void);

@@ -20,8 +20,7 @@
 #include <sys/mman.h>
 #include <util/binalign.h>
 #include <util/math.h>
-//----------
-#include <stdio.h>
+
 
 static int mmu_enabled;
 
@@ -87,12 +86,5 @@ int vmem_map_kernel(void) {
 
 void vmem_handle_page_fault(mmu_vaddr_t virt_addr) {
 	panic("MMU page fault: virt_addr - 0x%x\n", (unsigned int) virt_addr);
-}
-
-void print_sections(void) {
-	printf("TEXT: begin - %p len - %p\n", &_text_vma, &_text_len);
-	printf("RODATA: begin - %p len - %p\n",&_rodata_vma, &_rodata_len);
-	printf("DATA: begin - %p len - %p\n",&_data_vma, &_data_len);
-	printf("BSS: begin - %p len - %p\n",&_bss_vma, &_bss_len_with_reserve);
 }
 

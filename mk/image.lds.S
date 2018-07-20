@@ -30,7 +30,7 @@ SECTIONS {
 
 		*(.text)
 		*(.text.*)
-
+		_text_end = .;
 	} SECTION_REGION(text) :text
 
 	.rodata : ALIGN(DATA_ALIGNMENT) {
@@ -63,6 +63,7 @@ SECTIONS {
 		ALIGNMENT();
 		*(.checksum)
 
+		_rodata_end = .;
 	} SECTION_REGION(rodata) :rodata
 
 	.data : ALIGN(DATA_ALIGNMENT) {
@@ -73,6 +74,7 @@ SECTIONS {
 		*(.got)
 		*(.got.*)
 
+		_data_end = .;
 	} SECTION_REGION(data) :data
 
 	.bss : ALIGN(DATA_ALIGNMENT) {
@@ -92,15 +94,23 @@ SECTIONS {
 
 		ALIGNMENT();
 		_reserve_end = .;
+		_bss_reserve = _reserve_end - _bss_end;
+
 	} SECTION_REGION(bss) :bss
 
 	_bss_len = _bss_end - _bss_vma;
 	_bss_len_with_reserve = SIZEOF(.bss);
 
+	_heap_vma = 0;
+	_heap_end = 0;
+	_heap_len = 0;
 #if HAS_SECTION_REGION(heap)
 	.heap : ALIGN(DATA_ALIGNMENT) {
+		_heap_vma = .;
 		*(.heap)
 		*(.heap.*)
+		_heap_end = .;
+		_heap_len = _heap_end - _heap_vma;
 	} SECTION_REGION(heap)
 #endif
 

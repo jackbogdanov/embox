@@ -11,9 +11,16 @@
 
 #include <stdint.h>
 
+#define MAX_SEGMENTS 64
+
 struct periph_memory_desc {
 	uint32_t start;
 	uint32_t len;
+};
+
+struct _segment {
+	uint32_t start;
+	uint32_t end;
 };
 
 #define PERIPH_MEMORY_DEFINE(_mem_desc)	\
@@ -22,6 +29,6 @@ struct periph_memory_desc {
 	ARRAY_SPREAD_ADD(__periph_mem_registry, \
 		&_mem_desc)
 
-extern void print_segments(void);
+extern void periph_description(struct _segment ** buff, int * size);
 
 #endif /* _DRIVERS_COMMON_MEMORY_H */
