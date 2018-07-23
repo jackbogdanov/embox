@@ -28,7 +28,7 @@ static int phymem_init(void) {
 	log_boot("start=%p end=%p size=%zu\n", phymem_alloc_start, phymem_alloc_end, mem_len);
 
 
-	va = mmap_device_memory(phymem_alloc_start,
+	va = mmap_device_memory (phymem_alloc_start,
 			binalign_bound(mem_len, PAGE_SIZE()),
 			PROT_WRITE | PROT_READ,
 			MAP_FIXED,
@@ -62,7 +62,6 @@ void phymem_free(void *page, size_t page_number) {
 	page_free(__phymem_allocator, page, page_number);
 }
 
-struct page_allocator * phy_allocator(void) {
+struct page_allocator *phy_allocator(void) {
 	return __phymem_allocator;
 }
-

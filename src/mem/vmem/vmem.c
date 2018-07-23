@@ -21,7 +21,6 @@
 #include <util/binalign.h>
 #include <util/math.h>
 
-
 static int mmu_enabled;
 
 /* Section pointers. */

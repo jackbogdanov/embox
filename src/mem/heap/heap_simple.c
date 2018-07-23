@@ -6,13 +6,11 @@
  * @author Nikolay Korotky
  */
 
-
 #include <string.h>
 #include <stdlib.h>
 #include <embox/unit.h>
 #include <mem/heap.h>
 #include <mem/page.h>
-
 
 static int has_initialized = 0;
 static char *managed_memory_start;
@@ -131,5 +129,3 @@ void *realloc(void *ptr, size_t size) {
 	free(ptr);
 	return tmp;
 }
-
-

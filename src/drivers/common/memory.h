@@ -29,6 +29,6 @@ struct _segment {
 	ARRAY_SPREAD_ADD(__periph_mem_registry, \
 		&_mem_desc)
 
-extern void periph_description(struct _segment ** buff, int * size);
+extern void periph_description(struct _segment **buff, int *size);
 
 #endif /* _DRIVERS_COMMON_MEMORY_H */

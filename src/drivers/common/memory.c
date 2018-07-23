@@ -98,15 +98,15 @@ static int periph_memory_init(void) {
 	return 0;
 }
 
-void periph_description(struct _segment ** buff, int * size) {
-		for(int i = 0; i < MAX_SEGMENTS; i++) {
-			if (!_segments[i].start) {
-				*size = i;
-				break;
-			}
+void periph_description(struct _segment **buff, int *size) {
 
-			buff[i] = &_segments[i];
+	for (int i = 0; i < MAX_SEGMENTS; i++) {
+		if (!_segments[i].start) {
+			*size = i;
+			break;
 		}
+		buff[i] = &_segments[i];
+	}
 }
 
 #endif /* NOMMU */

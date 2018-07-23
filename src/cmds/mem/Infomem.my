@@ -11,7 +11,7 @@ package embox.cmd.mem
 		DESCRIPTION
 
 		AUTHOR
-			Bogdanov Evgenij
+			Evgenij Bogdanov
 	''')
 module infomem {
 	source "infomem.c"

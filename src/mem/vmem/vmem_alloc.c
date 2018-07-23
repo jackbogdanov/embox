@@ -157,16 +157,14 @@ void vmem_free_page(void *addr) {
 		page_free(virt_page_allocator, addr, 1);
 }
 
-
-struct page_allocator * get_pgd_allocator(void) {
+struct page_allocator *get_pgd_allocator(void) {
 	return pgd_allocator;
 }
 
-struct page_allocator * get_pmd_allocator(void) {
+struct page_allocator *get_pmd_allocator(void) {
 	return pmd_allocator;
 }
 
-struct page_allocator * get_pte_allocator(void) {
+struct page_allocator *get_pte_allocator(void) {
 	return pte_allocator;
 }
-
