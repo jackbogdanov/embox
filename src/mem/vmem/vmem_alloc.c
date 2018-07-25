@@ -19,7 +19,6 @@
 #include <mem/vmem/vmem_alloc.h>
 #include <util/binalign.h>
 
-
 #define PGD_COUNT  OPTION_GET(NUMBER, pgd_count)
 #define PMD_COUNT  OPTION_GET(NUMBER, pmd_count)
 #define PTE_COUNT  OPTION_GET(NUMBER, pte_count)
@@ -166,5 +165,8 @@ struct page_allocator *get_pmd_allocator(void) {
 }
 
 struct page_allocator *get_pte_allocator(void) {
+#if (PTE_COUNT > 1)
 	return pte_allocator;
+#endif
+	return NULL;
 }

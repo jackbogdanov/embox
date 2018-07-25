@@ -27,8 +27,7 @@ static int phymem_init(void) {
 	log_boot_start();
 	log_boot("start=%p end=%p size=%zu\n", phymem_alloc_start, phymem_alloc_end, mem_len);
 
-
-	va = mmap_device_memory (phymem_alloc_start,
+	va = mmap_device_memory(phymem_alloc_start,
 			binalign_bound(mem_len, PAGE_SIZE()),
 			PROT_WRITE | PROT_READ,
 			MAP_FIXED,
@@ -41,7 +40,7 @@ static int phymem_init(void) {
 }
 
 char * const phymem_allocated_start(void) {
-    extern char _reserve_end;
+	extern char _reserve_end;
 
     return (char *) binalign_bound((uintptr_t) &_reserve_end, PAGE_SIZE());
 }
@@ -50,8 +49,8 @@ char *const phymem_allocated_end(void) {
 	extern char _ram_base;
 	extern char _ram_size;
 
-    return (char *)
-    		binalign_bound((uintptr_t) &_ram_base + (size_t) &_ram_size, PAGE_SIZE());
+	return (char *)
+			binalign_bound((uintptr_t) &_ram_base + (size_t) &_ram_size, PAGE_SIZE());
 }
 
 void *phymem_alloc(size_t page_number) {
