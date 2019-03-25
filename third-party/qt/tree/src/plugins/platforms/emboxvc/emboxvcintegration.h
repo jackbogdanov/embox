@@ -4,7 +4,7 @@
 #include <QtGui>
 #include <QtGui/QPlatformIntegration>
 #include <QtGui/QPlatformScreen>
-#include <../fb_base/fb_base.h>
+//#include <../fb_base/fb_base.h>
 #include "qgenericunixfontdatabase.h"
 
 QT_BEGIN_NAMESPACE

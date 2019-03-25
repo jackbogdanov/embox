@@ -220,6 +220,8 @@ int main(int argv, char **args)
 	waitq_init(&texteditor_inited_wq);
 
 	QApplication app(argv, args);
+	//QCursor * cursor = new QCursor(Qt::UpArrowCursor);
+	//QApplication::setOverrideCursor(*cursor);
 
 	__qt_app = &app;
 

@@ -4,6 +4,7 @@
 #include <QtGui/private/qpixmap_raster_p.h>
 #include <QtGui/QPlatformWindow>
 #include <QtGui/QGraphicsView>
+#include <../fb_base/fb_base.h>
 
 QEmboxVC *globalEmboxVC;
 
@@ -18,6 +19,7 @@ QEmboxVCIntegration::QEmboxVCIntegration()
 
     globalEmboxVC = new QEmboxVC();
 
+    QPlatformSoftwareCursor cursor(mPrimaryScreen);
     mScreens.append(mPrimaryScreen);
 }
 

@@ -4,6 +4,9 @@
 #include <QtGui/QImageReader>
 #include <QtGui/QRgb>
 
+#include <QScreenCursor>
+#include <QtGui/private/qapplication_p.h>
+
 QT_BEGIN_NAMESPACE
 
 static unsigned char *__calculateCursorLocation(struct fb_info *fb, int x, int y);
@@ -15,6 +18,10 @@ QEmboxCursor::QEmboxCursor()
 	cursor = cursor.convertToFormat(QImage::Format_RGB16);
 	cursor_H = cursor.height();
 	cursor_W = cursor.width();
+
+    //QScreenCursor::initSoftwareCursor();
+    //QScreenCursor * cursor1 = QScreenCursor::instance();
+    //scursor1->show();
 
 	/* 4 is the upper bound for bytes per pixel */
 	dirtyRect = new unsigned char[cursor_H * cursor_W * 4];
