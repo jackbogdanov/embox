@@ -56,7 +56,7 @@ private:
 class QEmboxVC
 {
 public:
-	QEmboxVC();
+	QEmboxVC(QPlatformScreen *s);
     ~QEmboxVC();
 
     struct vc emboxVC;

@@ -13,6 +13,7 @@ RESOURCES = cursor.qrc
 
 sources.files = $$SOURCES $$HEADERS $$RESOURCES $$FORMS emboxvc.pro
 
+include(../fb_base/fb_base.pri)
 include(../fontdatabases/genericunix/genericunix.pri)
 
 target.path += $$[QT_INSTALL_PLUGINS]/platforms
