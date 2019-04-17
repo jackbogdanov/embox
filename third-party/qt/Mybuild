@@ -6,9 +6,20 @@ package third_party.qt
 @BuildDepends(embox.lib.libgcc)
 @BuildDepends(third_party.lib.OpenLibm)
 @BuildDepends(third_party.STLport.libstlportg)
+
+@BuildDepends(embox.kernel.time.kernel_time)
+@BuildDepends(embox.kernel.timer.sys_timer)
+@BuildDepends(embox.kernel.timer.strategy.list_timer)
+@BuildDepends(embox.kernel.timer.sleep)
+
 static module core {
 	option boolean stl_support=false
 	option boolean process_support=false
+
+	depends embox.kernel.timer.sleep
+	depends embox.kernel.timer.strategy.list_timer
+	depends embox.kernel.timer.sys_timer
+	depends embox.kernel.time.kernel_time
 
 	@AddPrefix("^BUILD/extbld/^MOD_PATH/install/lib")
 	source "libQtCore.a", "libQtGui.a", "libQtMultimedia.a",

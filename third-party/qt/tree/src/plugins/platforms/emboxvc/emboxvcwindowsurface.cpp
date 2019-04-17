@@ -21,6 +21,11 @@
 #include <kernel/thread/waitq.h>
 #include <util/ring_buff.h>
 
+#include <kernel/time/timer.h>
+#include <kernel/time/time.h>
+
+#include <qpainter.h>
+
 QT_BEGIN_NAMESPACE
 
 #define MOUSE_EVENT_BUFFER_SIZE 4096
@@ -82,6 +87,9 @@ static QList<QEmboxVCWindowSurface*> __emboxVCcollection;
 extern QEmboxVC *globalEmboxVC;
 extern void emboxRootWindowShow(int width, int height);
 static struct fb_var_screeninfo globalEmboxVC_vinfo;
+
+static struct sys_timer draw_cursor_timer;
+#define TIMER_TICK 1000
 
 static void flushAll() {
 	QRegion region;
@@ -152,6 +160,13 @@ void QEmboxVCMouseHandler::activate() {
 	waitq_wakeup_all(&new_data);
 }
 
+void *drawingMouseThread(void *arg) {
+	while(true) {
+		globalEmboxVC->cursor->drawQtCursor();
+	}
+}
+
+
 void *readMouseDataThread(void *arg) {
 	(void) arg;
 
@@ -200,7 +215,9 @@ void *readMouseDataThread(void *arg) {
 			return NULL;
 		}
 
-		emvc->cursor->emboxCursorRedraw(emvc->emboxVC.fb, emvc->mouseX, emvc->mouseY);
+		//emvc->cursor->emboxCursorRedraw(emvc->emboxVC.fb, emvc->mouseX, emvc->mouseY);
+
+		//emvc->cursor->drawQtCursor();
 	}
 
 	assert(0);
@@ -315,10 +332,10 @@ static void __scheduleDevisualization(struct vc *vc) {
 	mpx_devisualized(vc);
 }
 
-QEmboxVC::QEmboxVC()
+QEmboxVC::QEmboxVC(QPlatformScreen *s)
     : emboxVCvisualized(0), mouseX(0), mouseY(0)
 {
-	cursor = new QEmboxCursor(new QFbScreen());
+	cursor = new QEmboxCursor(s);
 
 	mouseHandler = new QEmboxVCMouseHandler();
 	keyboardHandler = new QEmboxVCKeyboardHandler();
@@ -341,14 +358,31 @@ QEmboxVC::~QEmboxVC() {
 	thread_cancel(visualize_thread);
 }
 
+
+static void ttl_handler(struct sys_timer *timer, void *param) {
+	qDebug() << "timer working!";
+	//emvc->cursor->drawQtCursor();
+}
+
+
 QEmboxVCWindowSurface::QEmboxVCWindowSurface(QWidget *window)
     : QWindowSurface(window)
 {
 	mImage = QImage(QSize(window->width(), window->height()), QImage::Format_RGB16);
 
 	vc = globalEmboxVC;
+	QPainter *painter = new QPainter(&mImage);
+   
+	vc->cursor->setPainter(painter);
+	qDebug() << "created !";
 
 	__emboxVCcollection.append(this);
+
+	//-------------------------------
+	timer_init(&draw_cursor_timer, TIMER_PERIODIC, ttl_handler, NULL);
+	timer_start(&draw_cursor_timer, ms2jiffies(TIMER_TICK));
+
+	//thread_create(0, drawingMouseThread, NULL);
 }
 
 QEmboxVCWindowSurface::~QEmboxVCWindowSurface()
@@ -388,9 +422,11 @@ void QEmboxVCWindowSurface::flush(QWidget *widget, const QRegion &region, const 
     	memcpy(begin + shift, (const void *)mImage.constScanLine(i), mImage.bytesPerLine());
     }
 
+    //qDebug() << "drowing !";
     /* Reset cursor on new image and redraw */
     vc->cursor->emboxCursorReset(vc->emboxVC.fb);
-    vc->cursor->emboxCursorRedraw(vc->emboxVC.fb, vc->mouseX, vc->mouseY);
+    //vc->cursor->emboxCursorRedraw(vc->emboxVC.fb, vc->mouseX, vc->mouseY);
+    //vc->cursor->drawQtCursor();
 }
 
 void QEmboxVCWindowSurface::resize(const QSize &size)

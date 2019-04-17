@@ -5,6 +5,8 @@
 #include <QtGui/QPlatformWindow>
 #include <QtGui/QGraphicsView>
 
+#include "../fb_base/fb_base.h"
+
 QEmboxVC *globalEmboxVC;
 
 QEmboxVCIntegration::QEmboxVCIntegration()
@@ -16,8 +18,9 @@ QEmboxVCIntegration::QEmboxVCIntegration()
     mPrimaryScreen->mDepth = 16;
     mPrimaryScreen->mFormat = QImage::Format_RGB16;
 
-    globalEmboxVC = new QEmboxVC();
+    globalEmboxVC = new QEmboxVC(mPrimaryScreen);
 
+    //QPlatformSoftwareCursor test = new QPlatformSoftwareCursor();
     mScreens.append(mPrimaryScreen);
 }
 

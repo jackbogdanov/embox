@@ -4,17 +4,19 @@
 #include <QtGui/QImageReader>
 #include <QtGui/QRgb>
 
+
 QT_BEGIN_NAMESPACE
 
 static unsigned char *__calculateCursorLocation(struct fb_info *fb, int x, int y);
 
-QEmboxCursor::QEmboxCursor(QFbScreen *s)
-	: QPlatformSoftwareCursor(s), mouseX(0), mouseY(0), inited(0)
+QEmboxCursor::QEmboxCursor(QPlatformScreen *s)//, QPainter p)
+	: QPlatformSoftwareCursor(s), mouseX(0), mouseY(0), inited(0)//, painter(p)
 {
 	cursor.load(QString(":/def_cur.png"));
 	cursor = cursor.convertToFormat(QImage::Format_RGB16);
 	cursor_H = cursor.height();
 	cursor_W = cursor.width();
+    qDebug() << "Cursor created";
 
 	/* 4 is the upper bound for bytes per pixel */
 	dirtyRect = new unsigned char[cursor_H * cursor_W * 4];
@@ -74,6 +76,15 @@ void QEmboxCursor::drawCursor(struct fb_info *fb, unsigned char *begin) {
     }
 
      prepareCursor(fb, begin);
+}
+
+void QEmboxCursor::drawQtCursor() {
+    QPlatformSoftwareCursor::drawCursor(*cur_painter);
+} 
+
+void QEmboxCursor::setPainter(QPainter *painter) {
+    qDebug() << "painter added";
+    cur_painter = painter;
 }
 
 void QEmboxCursor::prepareCursor(struct fb_info *fb, unsigned char *begin) {
